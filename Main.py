@@ -20,8 +20,11 @@ def scan_input(f):
 
 
 if __name__ == '__main__':
+
     f = open('input.txt')
     test_cases_n = scan_test_cases_n(f)
     for i in range(test_cases_n):
         # print(scan_input(f))
         regressor = Regressor(scan_input(f))
+
+
