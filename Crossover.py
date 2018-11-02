@@ -2,7 +2,7 @@ import random
 import numpy
 from Selection import select_pair
 
-p_crossover = 1
+p_crossover = 0.7
 
 
 def cross(n, population, x, y):
