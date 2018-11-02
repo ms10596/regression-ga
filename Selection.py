@@ -20,13 +20,13 @@ def select(population, x, y):
     # print(all_fitness)
     lucky = random.uniform(0, all_fitness)
     # print("lucky:", lucky)
-    for chromosome in population:
+    for i in range(len(population)):
         # print("fitness of chromosome", fitness(x, y, chromosome))
-        all_fitness -= fitness(x, y, chromosome)
+        all_fitness -= fitness(x, y, population[i])
         # print("all fitness:", all_fitness)
         if lucky <= all_fitness:
-            return chromosome
-    return population[len(population) - 1]
+            return i
+    return len(population) - 1
 
 
 def fitness(x, y, theta):
