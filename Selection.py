@@ -38,10 +38,18 @@ def get_all_fitness(population, x, y):
     return sum([fitness(x, y, i) for i in population])
 
 
+def get_best(population, x, y):
+    best = population[0]
+    for i in population:
+        if fitness(x, y, i) < fitness(x, y, best):
+            best = i
+    return best
+
+
 if __name__ == '__main__':
     thetas = numpy.array([0, 0, 0])
     population = [thetas, numpy.array([0, 0, 1]), numpy.array([1, 0, 0]), numpy.array([0, 1, 0])]
     x = numpy.array([[1, 1, 1, 1, 1], [1, 2, 3, 4, 5], [1, 4, 9, 16, 25]])
     y = numpy.array([1, 4, 9, 16, 25])
 
-    print(select_n_pairs(2, population, x, y))
+    print(get_best(population, x, y))

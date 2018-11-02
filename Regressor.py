@@ -1,12 +1,13 @@
 import numpy
 from numpy import sum, power, dot
 from matplotlib import pyplot as plt
+import Initialization, Selection, Crossover, Mutation
 import random
 
 p_crossover = 0.7
 p_mutation = 1
 population_size = 100
-generations = 10000
+generations = 100
 lower_bound = -10
 upper_bound = 10
 depending_factor = 2
@@ -18,9 +19,9 @@ class Regressor:
         self.degree = args[1]
         self.x = numpy.array([args[2]])
         self.y = numpy.array(args[3])
-        self.population = []
 
         self.add_degrees()
+        self.ga_stuff()
         self.plot()
 
     def add_degrees(self):
@@ -44,3 +45,10 @@ class Regressor:
         plt.plot(self.x[1], dot(self.x.transpose(), self.best_forever), 'ro')
         plt.show()
         print(self.best_forever)
+
+    def ga_stuff(self):
+        population = Initialization.initialize(population_size, lower_bound, upper_bound, self.degree + 1)
+        for current_generation in range(generations):
+            self.best_forever = Selection.get_best(population, self.x, self.y)
+            Crossover.cross(population_size, population, self.x, self.y)
+            Mutation.mutate(population, current_generation, generations, depending_factor)
