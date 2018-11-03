@@ -1,12 +1,9 @@
 import numpy
+import Initialization, Selection, Crossover, Mutation
 from numpy import sum, power, dot
 from matplotlib import pyplot as plt
-import Initialization, Selection, Crossover, Mutation
-import random
 
-p_crossover = 0.7
-p_mutation = 1
-population_size = 100
+population_size = 700
 generations = 100
 lower_bound = -10
 upper_bound = 10
@@ -21,8 +18,7 @@ class Regressor:
         self.y = numpy.array(args[3])
 
         self.add_degrees()
-        self.ga_stuff()
-        self.plot()
+        self.plot(self.ga_stuff())
 
     def add_degrees(self):
         """add polynomial degrees to the x if needed and adding the ones column for zero degree"""
@@ -32,23 +28,31 @@ class Regressor:
 
     def generate_starting_thetas(self):
         """return array of thetas of length degree + 1, Also it acts as the chromosome"""
-        return numpy.random.uniform(low=-10, high=10, size=self.degree + 1)
+        return numpy.random.uniform(low=lower_bound, high=upper_bound, size=self.degree + 1)
 
-    @staticmethod
-    def mse(x, y, theta):
+    def mse(self, theta):
         """return mean squared error, Also works as fitness function"""
-        return sum(power((dot(x.transpose(), theta) - y), 2)) / len(x)
+        return sum(power((dot(self.x.transpose(), theta) - self.y), 2)) / len(self.y)
 
-    def plot(self):
+    def plot(self, theta):
         """plot original points with green and my hypothesis with red"""
         plt.plot(self.x[1], self.y, 'go')
-        plt.plot(self.x[1], dot(self.x.transpose(), self.best_forever), 'ro')
+        plt.plot(self.x[1], dot(self.x.transpose(), theta), 'r')
+        plt.title("MSE: %f" % self.mse(theta))
         plt.show()
-        print(self.best_forever)
+        print(theta)
 
     def ga_stuff(self):
         population = Initialization.initialize(population_size, lower_bound, upper_bound, self.degree + 1)
+        best_forever = population[0]
         for current_generation in range(generations):
-            self.best_forever = Selection.get_best(population, self.x, self.y)
-            Crossover.cross(population_size, population, self.x, self.y)
+            self.sort_population(population)
+            best_of_generation = Selection.get_best(population, self.x, self.y).copy()
+            best_forever = best_of_generation.copy() if self.mse(best_of_generation) < self.mse(
+                best_forever) else best_forever
+            Crossover.cross(population_size // 2, population, self.x, self.y)
             Mutation.mutate(population, current_generation, generations, depending_factor)
+        return best_forever
+
+    def sort_population(self, population):
+        population.sort(key=self.mse)

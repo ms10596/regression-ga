@@ -1,9 +1,9 @@
 import random
 import numpy
-
+random.seed(1)
 lower_bound = -10
 upper_bound = 10
-p_mutation = 0.07
+p_mutation = 1
 
 
 def mutate(population, current_generation, max_generation, dependency_factor):
@@ -32,12 +32,12 @@ def nonuniform_mutation(theta, current_generation, max_generation, dependency_fa
     return theta
 
 
-if __name__ == '__main__':
-    thetas = numpy.array([0, 0, 0])
-    population = [thetas, numpy.array([0, 0, 1]), numpy.array([1, 0, 0]), numpy.array([0, 1, 0])]
-    x = numpy.array([[1, 1, 1, 1, 1], [1, 2, 3, 4, 5], [1, 4, 9, 16, 25]])
-    y = numpy.array([1, 4, 9, 16, 25])
-
-    print(population)
-    mutate(population, 5, 25, 2)
-    print(population)
+# if __name__ == '__main__':
+#     thetas = numpy.array([0, 0, 0])
+#     population = [thetas, numpy.array([0, 0, 1]), numpy.array([1, 0, 0]), numpy.array([0, 1, 0])]
+#     x = numpy.array([[1, 1, 1, 1, 1], [1, 2, 3, 4, 5], [1, 4, 9, 16, 25]])
+#     y = numpy.array([1, 4, 9, 16, 25])
+#
+#     print(population)
+#     mutate(population, 5, 25, 2)
+#     print(population)

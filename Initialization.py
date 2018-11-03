@@ -14,5 +14,5 @@ def generate_chromosome(low, hi, chromosome_length):
     return numpy.random.uniform(low=low, high=hi, size=chromosome_length)
 
 
-if __name__ == '__main__':
-    print(initialize(5, -10, 10, 5))
+# if __name__ == '__main__':
+#     print(initialize(5, -10, 10, 5))
