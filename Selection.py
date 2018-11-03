@@ -1,12 +1,7 @@
 from numpy import sum, power, dot
-import numpy
 import random
 
 random.seed(1)
-
-
-def select_n_pairs(n, population, x, y):
-    return [select_pair(population, x, y) for i in range(n)]
 
 
 def select_pair(population, x, y):
@@ -44,7 +39,6 @@ def get_best(population, x, y):
         if fitness(x, y, i) < fitness(x, y, best):
             best = i
     return best
-
 
 # if __name__ == '__main__':
 #     thetas = numpy.array([0, 0, 0])

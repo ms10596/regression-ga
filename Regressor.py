@@ -3,7 +3,7 @@ import Initialization, Selection, Crossover, Mutation
 from numpy import sum, power, dot
 from matplotlib import pyplot as plt
 
-population_size = 700
+population_size = 200
 generations = 100
 lower_bound = -10
 upper_bound = 10
@@ -44,10 +44,10 @@ class Regressor:
 
     def ga_stuff(self):
         population = Initialization.initialize(population_size, lower_bound, upper_bound, self.degree + 1)
-        best_forever = population[0]
+        best_forever = population[0].copy()
         for current_generation in range(generations):
             self.sort_population(population)
-            best_of_generation = Selection.get_best(population, self.x, self.y).copy()
+            best_of_generation = population[0].copy()
             best_forever = best_of_generation.copy() if self.mse(best_of_generation) < self.mse(
                 best_forever) else best_forever
             Crossover.cross(population_size // 2, population, self.x, self.y)
