@@ -3,8 +3,8 @@ import Initialization, Selection, Crossover, Mutation
 from numpy import sum, power, dot
 from matplotlib import pyplot as plt
 
-population_size = 200
-generations = 100
+population_size = 1000
+generations = 500
 lower_bound = -10
 upper_bound = 10
 depending_factor = 2
